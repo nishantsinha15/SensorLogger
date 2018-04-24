@@ -14,11 +14,6 @@ import java.util.*;
 public class MyDatabase extends SQLiteOpenHelper {
     File exportDir, fmicrophone, faccelerometer, fgyroscope, fgps, fwifi;
     Cursor cursoRmicrophone, cursoRwifi, cursoRgps, cursoRgyro, cursoRacc;
-//    File fmicrophone = new File(exportDir, "microphone.csv");
-//    File faccelerometer = new File(exportDir, "accelerometer.csv");
-//    File fgyroscope = new File(exportDir, "gyroscope.csv");
-//    File fgps = new File(exportDir, "gps.csv");
-//    File fwifi = new File(exportDir, "wifi.csv");
 
     public MyDatabase(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);

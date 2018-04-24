@@ -24,6 +24,7 @@ import android.telephony.CellInfo;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     MediaRecorder mediaRecorder;
     LocationManager locationManager;
     TextView mic, acc, gyro, gps, wifi, cell;
+    Button startButt, stopButt;
     double longitude;
     double latitude;
     int flag = -1;
@@ -56,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
     public void startSensing( View view ) throws IOException // Handle all the cases separately
     {
+        startButt.setEnabled(false);
+        stopButt.setEnabled(true);
             Log.d("Nishant", "Clicked");
             flag = 0;
             clicked = 0;
@@ -125,6 +129,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
     public void stopSensing( View view )
     {
+        startButt.setEnabled(true);
+        stopButt.setEnabled(false);
         mediaRecorder.stop();
         mediaRecorder.release();
         mediaRecorder = null;
@@ -143,6 +149,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
     protected void init()
     {
+        startButt = findViewById(R.id.start_button);
+        stopButt = findViewById(R.id.stop_button);
+    stopButt.setEnabled(false);
         db = new MyDatabase(this, "nishantSensors.db", null, 2);
         telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
