@@ -53,18 +53,26 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         boolean ret = (flag == 0)?true:false;
         return ret;
     }
+
     public void startSensing( View view ) throws IOException // Handle all the cases separately
     {
             Log.d("Nishant", "Clicked");
             flag = 0;
             clicked = 0;
+            mediaRecorder = new MediaRecorder();
             mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
             mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
             mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
             mediaRecorder.setOutputFile("dev/null");
             mediaRecorder.prepare();
-            mediaRecorder.start();
-            new Timer().scheduleAtFixedRate(new TimerTask() {
+        sm.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+
+        mediaRecorder.start();
+
+            sm.registerListener(this, mGyroscope, SensorManager.SENSOR_DELAY_NORMAL);
+
+
+        new Timer().scheduleAtFixedRate(new TimerTask() {
                 @Override
                 public void run() {
                         Double max;
@@ -119,7 +127,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     {
         mediaRecorder.stop();
         mediaRecorder.release();
-//        mediaRecorder = null;
+        mediaRecorder = null;
+        sm.unregisterListener(this);
         clicked = 1;
         flag = 1;
         Log.d("Nishant", "Stop");
